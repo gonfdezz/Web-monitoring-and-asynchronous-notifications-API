@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 from enum import Enum
 
+from sqlalchemy import Column, DateTime
 from sqlmodel import Field, Index, Relationship, SQLModel
 
 
@@ -24,9 +25,15 @@ class MonitoredSite(SQLModel, table=True):
     # Estado actual (desnormalizado a propósito)
     status: SiteStatus = SiteStatus.UNKNOWN
     consecutive_failures: int = 0
-    last_checked_at: datetime | None = None
+    last_checked_at: datetime | None = Field(
+        default=None,
+        sa_column=Column(DateTime(timezone=True), nullable=True),
+    )
 
-    created_at: datetime = Field(default_factory=utcnow)
+    created_at: datetime = Field(
+        default_factory=utcnow,
+        sa_column=Column(DateTime(timezone=True), nullable=False),
+    )
 
     logs: list["HealthLog"] = Relationship(
         back_populates="site",
@@ -39,7 +46,10 @@ class HealthLog(SQLModel, table=True):
 
     id: int | None = Field(default=None, primary_key=True)
     site_id: int = Field(foreign_key="monitoredsite.id", ondelete="CASCADE")
-    checked_at: datetime = Field(default_factory=utcnow)
+    checked_at: datetime = Field(
+        default_factory=utcnow,
+        sa_column=Column(DateTime(timezone=True), nullable=False),
+    )
 
     is_up: bool
     status_code: int | None = None
