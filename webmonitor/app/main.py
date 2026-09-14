@@ -5,6 +5,7 @@ import httpx
 from fastapi import FastAPI
 
 from app import models  # noqa: F401
+from app.api import metrics, sites
 from app.database import init_db
 from app.services.scheduler import start_scheduler, stop_scheduler
 
@@ -27,6 +28,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="WebMonitor API", lifespan=lifespan)
+app.include_router(sites.router)
+app.include_router(metrics.router)
 
 
 @app.get("/health")
