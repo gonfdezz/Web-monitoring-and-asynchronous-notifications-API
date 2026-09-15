@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API DE MONITORIZACIÓN WEB Y NOTIFICACIONES ASÍNCORNAS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <main class="board">
+
+    <header class="board__head">
+      <h1>API DE MONITORIZACIÓN WEB Y NOTIFICACIONES ASÍNCORNAS</h1>
+      <p id="summary" class="summary">Cargando…</p>
+    </header>
+
+    <section class="add">
+      <input id="name" type="text" placeholder="Nombre" maxlength="100">
+      <input id="url" type="url" placeholder="https://ejemplo.com">
+      <input id="interval" type="number" value="60" min="15" max="86400" title="Segundos entre comprobaciones">
+      <button id="add-btn" type="button">Vigilar este sitio</button>
+    </section>
+
+    <p id="error" class="error" hidden></p>
+
+    <ul id="sites" class="sites"></ul>
+
+    <p id="empty" class="empty" hidden>
+      No hay nada vigilado todavía. Añade una dirección para empezar.
+    </p>
+
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

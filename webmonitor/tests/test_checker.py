@@ -1,5 +1,6 @@
 import httpx
 import pytest
+
 from app.models import MonitoredSite
 from app.services.checker import check_many, check_site
 

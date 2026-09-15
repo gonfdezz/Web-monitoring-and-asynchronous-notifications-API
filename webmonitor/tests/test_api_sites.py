@@ -1,5 +1,4 @@
 import pytest
-from app.models import MonitoredSite, SiteStatus
 
 
 async def test_crear_sitio(client):

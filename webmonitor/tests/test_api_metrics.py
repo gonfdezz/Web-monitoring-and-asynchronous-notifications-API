@@ -1,6 +1,7 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import pytest
+
 from app.models import HealthLog, MonitoredSite
 from tests.conftest import IS_POSTGRES
 
@@ -12,7 +13,7 @@ async def crear_sitio_con_logs(session, muestras):
     await session.commit()
     await session.refresh(site)
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     for i, (is_up, ms) in enumerate(muestras):
         session.add(HealthLog(
             site_id=site.id,

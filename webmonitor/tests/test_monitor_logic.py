@@ -1,6 +1,7 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import pytest
+
 from app.models import MonitoredSite, SiteStatus
 from app.services.checker import CheckResult
 from app.services.monitor import apply_result, is_due
@@ -53,16 +54,16 @@ def test_exito_resetea_contador():
 
 
 def test_is_due_sin_comprobaciones_previas():
-    assert is_due(make_site(last_checked_at=None), datetime.now(timezone.utc)) is True
+    assert is_due(make_site(last_checked_at=None), datetime.now(UTC)) is True
 
 
 def test_is_due_respeta_el_intervalo():
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     site = make_site(check_interval=60, last_checked_at=now - timedelta(seconds=30))
     assert is_due(site, now) is False
 
 
 def test_is_due_cuando_vence():
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     site = make_site(check_interval=60, last_checked_at=now - timedelta(seconds=61))
     assert is_due(site, now) is True

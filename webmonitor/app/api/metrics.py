@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
@@ -27,7 +27,7 @@ async def site_metrics(
     hours: Annotated[int, Query(ge=1, le=720)] = 24,
 ):
     await _ensure_site(session, site_id)
-    since = datetime.now(timezone.utc) - timedelta(hours=hours)
+    since = datetime.now(UTC) - timedelta(hours=hours)
 
     stmt = select(
         func.count(HealthLog.id).label("total"),
@@ -59,7 +59,7 @@ async def site_logs(
     limit: Annotated[int, Query(ge=1, le=1000)] = 100,
 ):
     await _ensure_site(session, site_id)
-    since = datetime.now(timezone.utc) - timedelta(hours=hours)
+    since = datetime.now(UTC) - timedelta(hours=hours)
 
     stmt = (
         select(HealthLog)

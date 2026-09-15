@@ -1,5 +1,6 @@
 import httpx
 import pytest
+
 from app.config import settings
 from app.models import MonitoredSite, SiteStatus
 from app.services.checker import CheckResult

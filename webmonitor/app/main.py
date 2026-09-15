@@ -1,8 +1,11 @@
 import logging
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 import httpx
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from app import models  # noqa: F401
 from app.api import metrics, sites
@@ -30,6 +33,14 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="WebMonitor API", lifespan=lifespan)
 app.include_router(sites.router)
 app.include_router(metrics.router)
+STATIC_DIR = Path(__file__).parent / "static"
+
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+
+@app.get("/", include_in_schema=False)
+async def index():
+    return FileResponse(STATIC_DIR / "index.html")
 
 
 @app.get("/health")

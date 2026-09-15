@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import httpx
 from sqlmodel import select
@@ -43,7 +43,7 @@ def apply_result(site: MonitoredSite, result: CheckResult) -> str | None:
 
 async def run_checks(client: httpx.AsyncClient) -> None:
     """Una ronda completa: selecciona, comprueba, persiste y alerta."""
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     pending: list[tuple[MonitoredSite, CheckResult, str]] = []
 
     async with async_session() as session:
