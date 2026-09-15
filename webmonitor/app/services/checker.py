@@ -59,7 +59,7 @@ async def check_many(
     )
 
     final: list[CheckResult] = []
-    for site, result in zip(sites, results):
+    for site, result in zip(sites, results, strict=True):
         if isinstance(result, BaseException):
             final.append(
                 CheckResult(

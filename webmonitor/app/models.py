@@ -1,5 +1,5 @@
 from datetime import UTC, datetime
-from enum import Enum
+from enum import StrEnum
 
 from sqlalchemy import Column, DateTime
 from sqlmodel import Field, Index, Relationship, SQLModel
@@ -9,7 +9,7 @@ def utcnow() -> datetime:
     return datetime.now(UTC)
 
 
-class SiteStatus(str, Enum):
+class SiteStatus(StrEnum):
     UP = "up"
     DOWN = "down"
     UNKNOWN = "unknown"
