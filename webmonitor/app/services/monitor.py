@@ -47,7 +47,7 @@ async def run_checks(client: httpx.AsyncClient) -> None:
     pending: list[tuple[MonitoredSite, CheckResult, str]] = []
 
     async with async_session() as session:
-        stmt = select(MonitoredSite).where(MonitoredSite.is_active == True)  # noqa: E712
+        stmt = select(MonitoredSite).where(MonitoredSite.is_active == True)  
         sites = (await session.execute(stmt)).scalars().all()
 
         due = [s for s in sites if is_due(s, now)]
