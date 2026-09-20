@@ -1,6 +1,6 @@
 # webmonitor
 
-![CI](https://github.com/TU_USUARIO/webmonitor/actions/workflows/ci.yml/badge.svg)
+
 
 Servicio de monitorización de disponibilidad web: comprueba periódicamente un conjunto
 de endpoints HTTP de forma concurrente, registra latencia y estado en una serie temporal,
