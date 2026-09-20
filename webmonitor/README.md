@@ -6,8 +6,8 @@ Servicio de monitorización de disponibilidad web: comprueba periódicamente un 
 de endpoints HTTP de forma concurrente, registra latencia y estado en una serie temporal,
 y notifica por webhook cuando un sitio cambia de estado.
 
-**Demo en vivo:** https://TU-SERVICIO.onrender.com ·
-**API interactiva:** https://TU-SERVICIO.onrender.com/docs
+**Demo en vivo:** https://web-monitoring-and-asynchronous-kz0x.onrender.com ·
+**API interactiva:** https://web-monitoring-and-asynchronous-kz0x.onrender.com/docs
 
 > La demo corre en el plan gratuito de Render. La primera carga puede tardar unos
 > segundos si el servicio estaba suspendido. La lectura es pública; crear, modificar
@@ -126,7 +126,8 @@ hora local ocurre solo en el navegador.
 Requisitos: Python 3.12 o superior.
 
 ```bash
-git clone https://github.com/TU_USUARIO/webmonitor.git
+git clone https://github.com/gonfdezz/Web-monitoring-and-asynchronous-notifications-API.git
+
 cd webmonitor
 
 python3 -m venv .venv
