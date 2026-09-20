@@ -7,6 +7,7 @@ from sqlmodel import select
 from app.database import get_session
 from app.models import MonitoredSite
 from app.schemas import SiteCreate, SiteRead, SiteUpdate
+from app.security import require_api_key
 
 router = APIRouter(prefix="/sites", tags=["sites"])
 
@@ -23,7 +24,12 @@ async def _get_or_404(session: AsyncSession, site_id: int) -> MonitoredSite:
     return site
 
 
-@router.post("", response_model=SiteRead, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "",
+    response_model=SiteRead,
+    status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(require_api_key)],
+)
 async def create_site(payload: SiteCreate, session: SessionDep):
     site = MonitoredSite(
         name=payload.name,
@@ -54,7 +60,11 @@ async def get_site(site_id: int, session: SessionDep):
     return await _get_or_404(session, site_id)
 
 
-@router.patch("/{site_id}", response_model=SiteRead)
+@router.patch(
+    "/{site_id}",
+    response_model=SiteRead,
+    dependencies=[Depends(require_api_key)],
+)
 async def update_site(site_id: int, payload: SiteUpdate, session: SessionDep):
     site = await _get_or_404(session, site_id)
     for field, value in payload.model_dump(exclude_unset=True).items():
@@ -64,7 +74,11 @@ async def update_site(site_id: int, payload: SiteUpdate, session: SessionDep):
     return site
 
 
-@router.delete("/{site_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(
+    "/{site_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_api_key)],
+)
 async def delete_site(site_id: int, session: SessionDep):
     site = await _get_or_404(session, site_id)
     await session.delete(site)

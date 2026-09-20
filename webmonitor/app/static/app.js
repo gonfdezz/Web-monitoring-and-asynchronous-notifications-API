@@ -9,12 +9,16 @@ const state = {
 };
 
 const $ = (id) => document.getElementById(id);
+const apiKey = localStorage.getItem("webmonitor_key") || "";
 
 // ---------- Capa de acceso a la API ----------
 
 async function api(path, options = {}) {
   const response = await fetch(path, {
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      ...(apiKey ? { "X-API-Key": apiKey } : {}),
+    },
     ...options,
   });
 

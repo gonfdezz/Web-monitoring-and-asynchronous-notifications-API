@@ -68,3 +68,29 @@ async def test_borrar(client):
 
 async def test_404_en_sitio_inexistente(client):
     assert (await client.get("/sites/9999")).status_code == 404
+
+async def test_escritura_sin_clave_falla(client, monkeypatch):
+    from app.config import settings
+    monkeypatch.setattr(settings, "api_key", "secreta")
+
+    r = await client.post("/sites", json={"name": "X", "url": "https://x.com"})
+    assert r.status_code == 401
+
+
+async def test_escritura_con_clave_funciona(client, monkeypatch):
+    from app.config import settings
+    monkeypatch.setattr(settings, "api_key", "secreta")
+
+    r = await client.post(
+        "/sites",
+        json={"name": "X", "url": "https://x.com"},
+        headers={"X-API-Key": "secreta"},
+    )
+    assert r.status_code == 201
+
+
+async def test_lectura_sigue_abierta(client, monkeypatch):
+    from app.config import settings
+    monkeypatch.setattr(settings, "api_key", "secreta")
+
+    assert (await client.get("/sites")).status_code == 200

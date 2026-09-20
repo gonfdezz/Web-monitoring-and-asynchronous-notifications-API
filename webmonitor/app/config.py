@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     failure_threshold: int = 3            # fallos seguidos para marcar DOWN
     request_timeout: float = 10.0
     discord_webhook_url: str | None = None
+    api_key: str | None = None
 
 
 settings = Settings()
