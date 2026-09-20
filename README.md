@@ -13,7 +13,7 @@ y notifica por webhook cuando un sitio cambia de estado.
 > segundos si el servicio estaba suspendido. La lectura es pública; crear, modificar
 > o borrar sitios requiere una clave de API.
 
-![Captura del panel](docs/panel.png)
+![Captura del panel](webmonitor/docs/panel.png)
 
 ---
 
